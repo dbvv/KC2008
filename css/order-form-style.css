@@ -1,0 +1,77 @@
+.order_delivery_form {
+    /* max-width: 80%; */
+    background-color: #fff;
+    padding: 40px 10px 10px 10px;
+    box-sizing: border-box;
+    position: relative;
+    border-left: 1px solid #ccd0d4;
+    border-right: 1px solid #ccd0d4;
+    border-bottom: 1px solid #ccd0d4;
+}
+.order_delivery_form .titleBlock {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    border-top: 1px solid #ccd0d4;
+    border-bottom: 1px solid #ccd0d4;
+    padding: 8px 12px;
+    box-sizing: border-box;
+}
+.order_delivery_form .titleBlock h2 {
+    margin: 0;
+}
+.order_delivery_form ol {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.order_delivery_form ol .col.name input {
+    width: calc(100% - 10px);
+}
+.order_delivery_form .col {
+    min-width: 170px;
+}
+.order_delivery_form .col.center input {
+    text-align: center;
+}
+.order_delivery_form .col.name {
+    flex: 1;
+}
+.order_delivery_form .iterator.empty {
+    padding-left: 20px;
+}
+.order_delivery_form .iterator {
+    padding: 10px;
+}
+.ks2008_order_delivery_table label > span {
+    color:red;
+}
+.ks2008_order_delivery_table textarea {
+    width: 100%;
+}
+.ks2008_order_delivery_table p label:nth-child(1) {
+    font-weight: bold;
+}
+.ks2008_order_delivery_table button, .ks2008_order_delivery_table .button-secondary {
+    margin: 1px !important;
+}
+#measoftMapBlock {
+    position: relative;
+}
+#pvz_map_container {
+    right: 0;
+    top: 0;
+}
+#pvz_map_container {
+    z-index: 9999;
+}
+
+@media (max-width: 850px) {
+    .order_delivery_form {
+        max-width: 100%;
+    }
+    .order_delivery_form ol {
+        display: block;
+    }
+}
