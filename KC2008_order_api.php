@@ -16,6 +16,7 @@
                 $this->options = get_option( 'KC2008_delivery_option' );
                 $this->measoft = new MeasoftCourier($this->options['login'], $this->options['password'], $this->options['code']);
 
+                add_action( 'woocommerce_thankyou', array($this, 'query_create_order'), 99 );
                 if( wp_doing_ajax() ){
                     add_action( 'wp_ajax_query_create_order', array($this, 'query_create_order') );
 
@@ -143,14 +144,16 @@
 		    	wp_die();
 			}
 
-            public function query_create_order() {
+      public function query_create_order($order_id) {
 				global $woocommerce;
 
-                $params = array();
+        $params = array();
 				$measoft_items = array();
 				$formData = array();
 
-				$order = wc_get_order( $_POST['post_id'] );
+        $order_check_send_id = isset($_POST['post_id']) ? $_POST['post_id'] : $order_id;
+
+				$order = wc_get_order( $order_check_send_id );
 				$order_data = $order->get_data();
 
 				## SHIPPING INFORMATION:
@@ -160,7 +163,7 @@
 				$order_shipping_city = $order_data['shipping']['city'];
 				$order_shipping_address_1 = $order_data['shipping']['address_1'];
 				$order_shipping_address_2 = $order_data['shipping']['address_2'];
-            	$order_shipping_postcode = $order_data['shipping']['postcode'];
+        $order_shipping_postcode = $order_data['shipping']['postcode'];
 
 				## BILLING INFORMATION:
 
@@ -170,7 +173,7 @@
 				$order_billing_city = $order_data['billing']['city'];
 				$order_billing_address_1 = $order_data['billing']['address_1'];
 				$order_billing_address_2 = $order_data['billing']['address_2'];
-            	$order_billing_postcode = $order_data['billing']['postcode'];
+        $order_billing_postcode = $order_data['billing']['postcode'];
 
 
 				$zipcode = $order_shipping_postcode ? $order_shipping_postcode : $order_billing_postcode;
@@ -284,19 +287,22 @@
 						'zipcode' => $zipcode,
 						'town' => $city,
 						'address' => $adress,
-						'date' => $_POST['delivery_date'],
-						'time_min' => $_POST['delivery_time_from'],
-						'time_max' => $_POST['delivery_time_to'],
+            'quantity' => 1,
+						//'date' => $_POST['delivery_date'],
+						//'time_min' => $_POST['delivery_time_from'],
+						//'time_max' => $_POST['delivery_time_to'],
 					),
-					'paytype' => $_POST['pay_type'],
-					'price' => $order->get_total(),
-					'deliveryprice' => $_POST['deliveryprice'],
-					'orderno' => $_POST['orderno'],
+					'paytype' => isset($_POST['pay_type']) ? $_POST['pay_type'] : $order_data['payment_method_title'],
+					'price' => $order_data['total'],
+					'inshprice' => $order_data['total'],
+					'deliveryprice' => isset($_POST['deliveryprice']) ? $_POST['deliveryprice'] : $order_data['shipping_total'],
+          'orderno' => isset($_POST['orderno']) ? $_POST['orderno'] : $order_data['id'],
 					'weight' => $total_weight,
-					'enclosure' => $_POST['enclosure'],
-					'instruction' => $_POST['instruction'],
+					'enclosure' => isset($_POST['enclosure']) ? $_POST['enclosure'] : $order_data['customer_note'],
+					'instruction' => isset($_POST['instruction']) ? $_POST['instruction'] : 'Проверить при покупателе, подписать акт',
 					'service' => 1,
 					'return' => false,
+          'quantity' => 1,
 				);
 
 				if (isset($_POST['pvz'])) {
@@ -345,7 +351,7 @@
 
 						$shipitem->set_method_title( "KC2008_shipping_title" );
 						$shipitem->set_method_id( "KC2008_shipping_method" ); // set an existing Shipping method rate ID
-						$shipitem->set_total( $_POST['deliveryprice'] ); // (optional)
+						$shipitem->set_total( isset($_POST['deliveryprice']) ? $_POST['deliveryprice'] : $order_data['shipping_total']) ; // (optional)
 						// $shipitem->calculate_taxes($calculate_tax_for);
 
 						$order->add_item( $shipitem );
@@ -354,7 +360,7 @@
 
 						$ress = $order->save();
 
-						wp_send_json_success($json_success);
+						//wp_send_json_success($json_success);
 
 					} else {
 						wp_send_json_error($json_error);
@@ -364,7 +370,7 @@
 					wp_send_json_error($json_error);
 				}
 
-                wp_die();
+                //wp_die();
             }
         }
 

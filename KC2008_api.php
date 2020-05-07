@@ -20,8 +20,8 @@
             public function query_authorization() {
 
                 $delivery_option_login =  $_POST['delivery_option_login'];
-				$delivery_option_password =  $_POST['delivery_option_password'];
-				$delivery_option_code =  $_POST['delivery_option_code'];
+                $delivery_option_password =  $_POST['delivery_option_password'];
+                $delivery_option_code =  $_POST['delivery_option_code'];
 
                 $measoft = new MeasoftCourier($delivery_option_login, $delivery_option_password, $delivery_option_code);
                 // $measoft->orderStatus('1235900');
