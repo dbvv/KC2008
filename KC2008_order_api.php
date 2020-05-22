@@ -155,7 +155,9 @@
 
 				$order = wc_get_order( $order_check_send_id );
 				$order_data = $order->get_data();
-
+        if ($order->get_shipping_method() != 'Курьерская служба 2008') {
+          return;
+        }
 				## SHIPPING INFORMATION:
 
 				$order_shipping_first_name = $order_data['shipping']['first_name'];
