@@ -185,7 +185,7 @@ if ( ! class_exists( 'KC2008_order_form_template' ) ) {
 
                             <p>
                                 <label for="deliveryprice">Стоимость доставки</label>
-                                <input class="deliveryprice" name="deliveryprice" id="deliveryprice" type="number" min="0" value="<?php echo $order->get_total_shipping(); ?>"><br>
+                                <input class="deliveryprice" name="deliveryprice" step="any" id="deliveryprice" type="number" min="0" value="<?php echo $order->get_total_shipping(); ?>"><br>
                                 <button type="button" name="deliveryprice_calculate" id="ks2008_deliveryprice_calculate" class="button button-secondary">Рассчитать стоимость доставки</button>
                                 <span style="display:none;" class="ks2008_deliveryprice_responce"></span>
                             </p>
