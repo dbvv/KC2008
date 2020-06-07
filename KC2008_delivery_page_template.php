@@ -47,7 +47,7 @@ if ( ! class_exists( 'KC2008_delivery_page_template' ) ) {
             );
 
             wp_enqueue_script('KC2008-measoft-map-script', 'https://home.courierexe.ru/js/measoft_map.js', array('jquery'), '1.0.0', 1 );
-            //wp_enqueue_script('KC2008-delivery-script', plugins_url('js/scripts.js', __FILE__), array('jquery'), '1.0.2', 1 );
+            wp_enqueue_script('KC2008-delivery-script', plugins_url('js/scripts.js', __FILE__), array('jquery'), '1.0.2', 1 );
 
 
             if( ! wp_script_is( 'jquery-ui-autocomplete', 'enqueued' ) ) {

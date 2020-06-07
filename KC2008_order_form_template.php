@@ -37,7 +37,7 @@ if ( ! class_exists( 'KC2008_order_form_template' ) ) {
             );
 
             wp_enqueue_script('KC2008-measoft-map-script', 'https://home.courierexe.ru/js/measoft_map.js', array('jquery'), '1.0.0', 1 );
-            //wp_enqueue_script('KC2008-order-form-script', plugins_url('js/order-form-script.js', __FILE__), array('jquery'), '1.0.2', 1 );
+            wp_enqueue_script('KC2008-order-form-script', plugins_url('js/order-form-script.js', __FILE__), array('jquery'), '1.0.2', 1 );
             wp_enqueue_style('KC2008-order-form-style', plugins_url('css/order-form-style.css', __FILE__), array(), '1.0.1');
 
             if( ! wp_script_is( 'jquery-ui-autocomplete', 'enqueued' ) ) {

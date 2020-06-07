@@ -22,18 +22,19 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
             public function __construct($instance_id = 0) {
                 $this->instance_id        = absint( $instance_id );
                 $this->id                 = 'KC2008_shipping_method'; // Id for your shipping method. Should be uunique.
-                // $this->method_title       = $this->get_option( 'title' );  // Title shown in admin
+                //$this->method_title       = $this->get_option( 'title' ) . $this->id;  // Title shown in admin
                 $this->method_title       = 'KC2008';  // Title shown in admin
                 $this->method_description = $this->get_option( 'description' ); // Description shown in admin
                 $this->enabled            = $this->get_option( 'enabled' );
                 // $this->enabled            = "yes"; // This can be added as an setting but for this example its forced enabled
                 $this->supports           = array(
                     'shipping-zones',
-                    'settings',
+                    //'settings',
                     'instance-settings',
                     'instance-settings-modal',
                 );
 
+                add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
                 $this->init();
             }
 
@@ -47,12 +48,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
                 // Load the settings API
                 $this->init_form_fields(); // This is part of the settings API. Override the method to add your own settings
                 $this->init_settings(); // This is part of the settings API. Loads settings you previously init.
-
                 $this->title = $this->get_option( 'title' ); //вывод заголовка при выборе способов доставки !!!!
-
-                // Save settings in admin if you have any defined
-                add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-
             }
 
             /**
@@ -74,7 +70,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
                     'title' => 'Заголовок',
                     'type' => 'text',
                     'description' => 'Заговок способа доствки КС2008',
-                    'default' => 'Курьерская служба 2008'
+                    'default' => 'Курьерская служба 2008 '
                 ),
 
                 'description' => array(
@@ -87,6 +83,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
                 );
 
             }
+
 
             /**
             * calculate_shipping function.
